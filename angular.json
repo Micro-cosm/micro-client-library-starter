@@ -1,0 +1,54 @@
+{
+    "$schema":        "./node_modules/@angular/cli/lib/config/schema.json",
+    "version":        1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "micro-client-library-starter": {
+            "projectType": "application",
+            "schematics":  { "@schematics/angular:component": { "style": "sass"}},
+            "root":        "",
+            "sourceRoot":  "src",
+            "prefix":      "app",
+            "architect":   {
+                "build":        { "builder": "@angular-devkit/build-angular:browser",      "options": { "outputPath": "dist/micro-client-library-starter", "index": "src/index.html", "main": "src/main.ts", "polyfills": "src/polyfills.ts", "tsConfig": "tsconfig.app.json", "aot": true, "assets": ["src/favicon.ico", "src/assets"], "styles": ["src/styles.sass"], "scripts": []}, "configurations": { "production": {"fileReplacements": [{"replace": "src/environments/environment.ts", "with": "src/environments/environment.prod.ts"}], "optimization": true, "outputHashing": "all", "sourceMap": false, "namedChunks": false, "extractLicenses": true, "vendorChunk": false, "buildOptimizer": true, "budgets": [{ "type": "initial", "maximumWarning": "2mb", "maximumError": "5mb"  }, { "type": "anyComponentStyle", "maximumWarning": "6kb", "maximumError": "10kb" }]}}},
+                "serve":        { "builder": "@angular-devkit/build-angular:dev-server",   "options": { "browserTarget": "micro-client-library-starter:build"}, "configurations": { "production": { "browserTarget": "micro-client-library-starter:build:production" }}},
+                "extract-i18n": { "builder": "@angular-devkit/build-angular:extract-i18n", "options": { "browserTarget": "micro-client-library-starter:build" }},
+                "test":         { "builder": "@angular-devkit/build-angular:karma",        "options": { "main": "src/test.ts", "polyfills":  "src/polyfills.ts", "tsConfig": "tsconfig.spec.json", "karmaConfig": "karma.conf.js", "assets": ["src/favicon.ico", "src/assets"], "styles": ["src/styles.sass"], "scripts": []}},
+                "lint":         { "builder": "@angular-eslint/builder:lint",               "options": { "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]}},
+                "e2e":          { "builder": "@angular-devkit/build-angular:protractor",   "options": { "protractorConfig": "e2e/protractor.conf.js", "devServerTarget": "micro-client-library-starter:serve"}, "configurations": { "production": { "devServerTarget": "micro-client-library-starter:serve:production"}}}
+            }
+        },
+        "weja-library": {
+            "projectType":  "library",
+            "root":         "projects/weja-library",
+            "sourceRoot":   "projects/weja-library/src",
+            "prefix":       "lib",
+            "architect": {
+                "build": { "builder": "@angular-devkit/build-angular:ng-packagr", "options": { "tsConfig": "projects/weja-library/tsconfig.lib.json", "project":  "projects/weja-library/ng-package.json"}, "configurations": { "production": { "tsConfig": "projects/weja-library/tsconfig.lib.prod.json"}}},
+                "test":  { "builder": "@angular-devkit/build-angular:karma",      "options": { "main": "projects/weja-library/src/test.ts", "tsConfig": "projects/weja-library/tsconfig.spec.json", "karmaConfig": "projects/weja-library/karma.conf.js"}},
+                "lint":  { "builder": "@angular-eslint/builder:lint",             "options": { "lintFilePatterns": ["projects/weja-library/**/*.ts", "projects/weja-library/**/*.html"]}}
+            }
+        },
+        "weja-elements": {
+            "projectType": "application",
+            "schematics":  { "@schematics/angular:component": { "style": "sass" }},
+            "root":        "projects/weja-elements",
+            "sourceRoot":  "projects/weja-elements/src",
+            "prefix":      "app",
+            "architect":   {
+                "build": {
+                    "builder": "@angular-builders/custom-webpack:browser",
+                    "options": {
+                        "customWebpackConfig": { "path": "./extra-webpack.config.js", "mergeStrategies": { "externals": "replace" }},
+                        "outputPath": "dist/weja-elements", "index": "projects/weja-elements/src/index.html", "main": "projects/weja-elements/src/main.ts", "polyfills": "projects/weja-elements/src/polyfills.ts", "tsConfig": "projects/weja-elements/tsconfig.app.json", "aot": true, "assets": ["projects/weja-elements/src/favicon.ico", "projects/weja-elements/src/assets"], "styles": ["projects/weja-elements/src/styles.sass"], "scripts": []}, "configurations":   { "production": { "fileReplacements": [{ "replace": "projects/weja-elements/src/environments/environment.ts", "with": "projects/weja-elements/src/environments/environment.prod.ts"}], "optimization": true, "outputHashing": "all", "sourceMap": false, "namedChunks": false, "extractLicenses": true, "vendorChunk": false, "buildOptimizer": true, "budgets": [{ "type": "initial", "maximumWarning": "2mb", "maximumError": "5mb"  }, { "type": "anyComponentStyle", "maximumWarning": "6kb", "maximumError": "10kb" }]}
+                }},
+                "serve":        { "builder": "@angular-devkit/build-angular:dev-server",    "options": { "browserTarget": "weja-elements:build"}, "configurations": { "production": { "browserTarget": "weja-elements:build:production"}}},
+                "extract-i18n": { "builder": "@angular-devkit/build-angular:extract-i18n",  "options": { "browserTarget": "weja-elements:build"}},
+                "test":         { "builder": "@angular-devkit/build-angular:karma",         "options": { "main":         "projects/weja-elements/src/test.ts", "polyfills":    "projects/weja-elements/src/polyfills.ts", "tsConfig":     "projects/weja-elements/tsconfig.spec.json", "karmaConfig":  "projects/weja-elements/karma.conf.js", "assets": ["projects/weja-elements/src/favicon.ico", "projects/weja-elements/src/assets"], "styles": ["projects/weja-elements/src/styles.sass"], "scripts": []}},
+                "lint":         { "builder": "@angular-eslint/builder:lint",                "options": { "lintFilePatterns": ["projects/weja-elements/**/*.ts", "projects/weja-elements/**/*.html"]}},
+                "e2e":          { "builder": "@angular-devkit/build-angular:protractor",    "options": { "protractorConfig": "projects/weja-elements/e2e/protractor.conf.js", "devServerTarget": "weja-elements:serve"}, "configurations": { "production": { "devServerTarget": "weja-elements:serve:production"}}
+                }
+            }
+        }
+    }, "defaultProject": "micro-client-library-starter", "cli": { "defaultCollection": "@angular-eslint/schematics" }
+}

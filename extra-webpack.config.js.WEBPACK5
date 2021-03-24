@@ -1,0 +1,7 @@
+
+
+module.exports = {
+	output: {
+		uniqueName: "Weja-Elements"
+	}
+}

@@ -1,0 +1,10 @@
+{
+    "name":        "weja-elements",
+    "version":     "0.0.1",
+    "description": "WeJa Element Library",
+    "main":        "karma.conf.js",
+    "scripts":     {"test": "ng test"},
+    "author":      "wes",
+    "license":     "ISC",
+    "files":       ["weja-elements.js", "styles.css"]
+}
